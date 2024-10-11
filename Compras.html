@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Gomitas</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --accent-color: #45B7D1;
+            --background-color: #F7FFF7;
+            --text-color: #2C3E50;
+            --card-background: #FFFFFF;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1, h2 {
+            color: var(--primary-color);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .products {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product {
+            background-color: var(--card-background);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow-color);
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.1em;
+            color: var(--accent-color);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-to-cart:hover {
+            background-color: #3DAFA9;
+            transform: scale(1.05);
+        }
+
+        .cart {
+            flex-basis: 300px;
+            background-color: var(--card-background);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            position: sticky;
+            top: 20px;
+            align-self: flex-start;
+        }
+
+        .cart h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        #cartItems {
+            margin-bottom: 20px;
+        }
+
+        #cartItems p {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        #cartTotal {
+            font-size: 1.3em;
+            font-weight: 700;
+            text-align: right;
+            margin-top: 20px;
+            border-top: 2px solid var(--accent-color);
+            padding-top: 15px;
+        }
+
+        .buy-button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            font-size: 1.1em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .buy-button:hover {
+            background-color: #3A9CB8;
+            transform: scale(1.05);
+        }
+
+        .back-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 1000;
+        }
+
+        .back-button:hover {
+            background-color: #FF4F4F;
+            transform: scale(1.05);
+        }
+
+        #invoice {
+            background-color: var(--card-background);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            margin-top: 40px;
+        }
+
+        #invoice h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        #invoice ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #invoice li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        #invoice strong {
+            font-size: 1.3em;
+            color: var(--accent-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: #7F8C8D;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .products-container {
+                flex-direction: column;
+            }
+
+            .cart {
+                margin-top: 40px;
+                position: static;
+            }
+
+            .back-button {
+                bottom: 20px;
+                left: 20px;
+                font-size: 0.9em;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Compra tus Gomitas Favoritas</h1>
+
+        <div class="products-container">
+            <div class="products">
+                <!-- Los productos se cargarán dinámicamente con JavaScript -->
+            </div>
+
+            <div class="cart">
+                <h2>Carrito de Compras</h2>
+                <div id="cartItems"></div>
+                <p id="cartTotal">Total: $0.00</p>
+                <button id="buyButton" class="buy-button">Comprar</button>
+            </div>
+        </div>
+
+        <div id="invoice" style="display: none;"></div>
+    </div>
+
+    <button class="back-button" onclick="window.location.href='index.html'">Regresar</button>
+
+    <footer>
+        <p>&copy; 2024 Picositas. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const products = [
+            { name: 'Gomitas de Mango', price: 1.50, image: 'imagen5.jpg' },
+            { name: 'Gomitas de Sandía', price: 1.25, image: 'imagen7.jpg' },
+            { name: 'Gomitas de Tamarindo', price: 1.00, image: 'imagen8.jpg' }
+        ];
+
+        const cart = [];
+        let total = 0;
+
+        function initializeStore() {
+            const productsContainer = document.querySelector('.products');
+            products.forEach(product => {
+                const productElement = createProductElement(product);
+                productsContainer.appendChild(productElement);
+            });
+
+            document.getElementById('buyButton').addEventListener('click', generateInvoice);
+        }
+
+        function createProductElement(product) {
+            const productDiv = document.createElement('div');
+            productDiv.className = 'product';
+            productDiv.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" width="200" height="200">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">$${product.price.toFixed(2)}</div>
+                <button class="add-to-cart">Agregar al carrito</button>
+            `;
+            productDiv.querySelector('.add-to-cart').addEventListener('click', () => addToCart(product));
+            return productDiv;
+        }
+
+        function addToCart(product) {
+            cart.push(product);
+            total += product.price;
+            updateCartDisplay();
+            alert(`${product.name} ha sido añadido al carrito.`);
+        }
+
+        function updateCartDisplay() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            cartItemsDiv.innerHTML = cart.map(item => `<p><span>${item.name}</span> <span>$${item.price.toFixed(2)}</span></p>`).join('');
+            document.getElementById('cartTotal').textContent = `Total: $${total.toFixed(2)}`;
+            document.getElementById('buyButton').style.display = cart.length > 0 ? 'block' : 'none';
+        }
+
+        function generateInvoice() {
+            if (cart.length === 0) {
+                alert("Tu carrito está vacío.");
+                return;
+            }
+
+            const invoice = `
+                <h2>Factura</h2>
+                <ul>${cart.map(item => `<li><span>${item.name}</span> <span>$${item.price.toFixed(2)}</span></li>`).join('')}</ul>
+                <p><strong>Total a pagar: $${total.toFixed(2)}</strong></p>
+            `;
+
+            document.querySelector('.products-container').style.display = 'none';
+            const invoiceElement = document.getElementById('invoice');
+            invoiceElement.innerHTML = invoice;
+            invoiceElement.style.display = 'block';
+        }
+
+        window.addEventListener('load', initializeStore);
+    </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Gomitas</title>
+    <style>
+        /* ... (Estilos anteriores sin cambios) ... */
+
+        /* Nuevos estilos para la factura */
+        #invoice {
+            background-color: var(--card-background);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 20px var(--shadow-color);
+            margin-top: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #invoice h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 2em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        #invoice .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        #invoice .invoice-header p {
+            margin: 0;
+            font-size: 1.1em;
+        }
+
+        #invoice table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        #invoice th, #invoice td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        #invoice th {
+            background-color: #f7f7f7;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        #invoice .total-row {
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.2em;
+        }
+
+        #invoice .invoice-footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #7F8C8D;
+            font-size: 0.9em;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #invoice, #invoice * {
+                visibility: visible;
+            }
+            #invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ... (Contenido HTML anterior sin cambios) ... -->
+
+    <script>
+        // ... (Código JavaScript anterior sin cambios) ...
+
+        function generateInvoice() {
+            if (cart.length === 0) {
+                alert("Tu carrito está vacío.");
+                return;
+            }
+
+            const currentDate = new Date().toLocaleDateString('es-ES');
+            const invoiceNumber = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+
+            const invoice = `
+                <h2>Factura</h2>
+                <div class="invoice-header">
+                    <p><strong>Fecha:</strong> ${currentDate}</p>
+                    <p><strong>Número de Factura:</strong> #${invoiceNumber}</p>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${cart.map(item => `
+                            <tr>
+                                <td>${item.name}</td>
+                                <td>1</td>
+                                <td>$${item.price.toFixed(2)}</td>
+                                <td>$${item.price.toFixed(2)}</td>
+                            </tr>
+                        `).join('')}
+                        <tr class="total-row">
+                            <td colspan="3">Total</td>
+                            <td>$${total.toFixed(2)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="invoice-footer">
+                    <p>Gracias por tu compra en Picositas</p>
+                    <p>Para cualquier consulta, contáctanos en support@picositas.com</p>
+                </div>
+            `;
+
+            document.querySelector('.products-container').style.display = 'none';
+            const invoiceElement = document.getElementById('invoice');
+            invoiceElement.innerHTML = invoice;
+            invoiceElement.style.display = 'block';
+        }
+
+        // ... (Resto del código JavaScript sin cambios) ...
+    </script>
+</body>
+</html>

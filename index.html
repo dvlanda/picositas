@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Spice Explosion: Gomitas picantes que despertarán tus sentidos. Descubre nuestra variedad de sabores explosivos y naturales.">
+    <title>Spice Explosion - Gomitas Picantes</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Pacifico&display=swap');
+
+        :root {
+            --primary-color: #FF4136;
+            --secondary-color: #2ECC40;
+            --background-color: #FFFAF0;
+            --text-color: #333;
+            --accent-color: #FF851B;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(255, 65, 54, 0.95);
+            padding: 1rem;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 0.5rem 1rem;
+            background-color: rgba(255, 65, 54, 0.98);
+        }
+
+        .nav-links {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5em 1em;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 10em 1em 6em;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(circle, var(--accent-color) 20%, transparent 20%),
+                radial-gradient(circle, var(--accent-color) 20%, transparent 20%);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            transform: rotate(45deg);
+            opacity: 0.1;
+            z-index: 1;
+            animation: backgroundMove 30s linear infinite;
+        }
+        
+        @keyframes backgroundMove {
+            0% { background-position: 0 0, 25px 25px; }
+            100% { background-position: 500px 500px, 525px 525px; }
+        }
+        
+        h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 5em;
+            margin-bottom: 0.2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            animation: titleEntrance 1s ease-out;
+        }
+
+        @keyframes titleEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+        
+        header p {
+            font-size: 1.6em;
+            position: relative;
+            z-index: 2;
+            animation: subtitleEntrance 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes subtitleEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5em 2em;
+        }
+        
+        .product-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4em;
+            background-color: white;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .product-info:hover {
+            transform: translateY(-10px);
+        }
+        
+        .product-text {
+            flex: 1 1 300px;
+            padding: 3em;
+        }
+        
+        .product-image {
+            flex: 1 1 300px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-image:hover img {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.8em;
+            font-size: 2.6em;
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background-color: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        h2:hover::after {
+            width: 100%;
+        }
+        
+        .spice-level {
+            display: flex;
+            align-items: center;
+            margin: 2em 0;
+            gap: 0.5em;
+        }
+        
+        .spice-meter {
+            display: flex;
+            gap: 0.2em;
+        }
+        
+        .spice-meter input[type="radio"] {
+            display: none;
+        }
+        
+        .spice-meter label {
+            cursor: pointer;
+            font-size: 1.5em;
+            opacity: 0.3;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        
+        .spice-meter input[type="radio"]:checked ~ label {
+            opacity: 0.3;
+        }
+        
+        .spice-meter label:hover,
+        .spice-meter label:hover ~ label,
+        .spice-meter input[type="radio"]:checked + label {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2em;
+            margin-top: 2em;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            aspect-ratio: 1;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 2em 1em;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1em 2em;
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.2em;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            margin-top: 2em;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(46, 204, 64, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 204, 64, 0.6);
+            background-color: #27AE60;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.5s ease;
+        }
+
+        .cta-button:hover::after {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.5em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px) rotate(360deg);
+            background-color: var(--accent-color);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2em;
+            margin-top: 3em;
+        }
+
+        .product-features {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .product-features li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .product-features li::before {
+            content: '🌶️';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        @media (max-width: 768px) {
+            .product-info {
+                flex-direction: column-reverse;
+            }
+            
+            .product-text,
+            .product-image {
+                flex: 1 1 100%;
+            }
+            
+            h1 {
+                font-size: 3.5em;
+            }
+            
+            h2 {
+                font-size: 2.2em;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 1em;
+            }
+
+            header {
+                padding: 8em 1em 4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="#inicio">Inicio</a>
+            <a href="#productos">Productos</a>
+            <a href="#galeria">Galería</a>
+            <a href="Chat.html">Contacto</a>
+        </div>
+    </nav>
+
+    <header id="inicio">
+        <h1>Spice Explosion</h1>
+        <p>¡El placer picante de lo dulce!</p>
+    </header>
+    
+    <main class="container">
+        <section id="productos" class="product-info">
+            <div class="product-text">
+                <h2>Descubre el sabor explosivo</h2>
+                <p>Nuestras gomitas Spice Explosion son la combinación perfecta entre lo dulce y lo picante. Hechas con los mejores ingredientes y un toque de chile especial, estas gomitas te llevarán a una aventura de sabor única e inolvidable.</p>
+                
+                <div class="spice-level">
+                    <span>Nivel de picor:</span>
+                    <div class="spice-meter">
+                        <input type="radio" name="spice" id="spice1" checked>
+                        <label for="spice1">🌶️</label>
+                        <input type="radio" name="spice" id="spice2">
+                        <label for="spice2">🌶️</label>
+                        <input type="radio" name="spice" id="spice3">
+                        <label for="spice3">🌶️</label>
+                        <input type="radio" name="spice" id="spice4">
+                        <label for="spice4">🌶️</label>
+                        <input type="radio" name="spice" id="spice5">
+                        <label for="spice5">🌶️</label>
+                    </div>
+                </div>
+
+                <ul class="product-features">
+                    <li>100% ingredientes naturales</li>
+                    <li>Sin conservantes artificiales</li>
+                    <li>Variedad de formas y sabores explosivos</li>
+                    <li>Picor<li>Picor personalizable para todos los gustos</li>
+                    <li>Empaque eco-amigable y reciclable</li>
+                </ul>
+                <a href="Compras.html" class="cta-button">¡Pruébalas ahora!</a>
+            </div>
+            <div class="product-image">
+                <img src="logo.jpg" alt="Gomitas Spice Explosion" width="400" height="400">
+            </div>
+        </section>
+        
+        <section id="galeria">
+            <h2>Galería de sabores explosivos</h2>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="imagen5.jpg" alt="Spice Explosion de mango" width="300" height="300">
+                    <div class="gallery-overlay">
+                        <h3>Mango Fuego</h3>
+                        <p>Dulzura tropical con un toque explosivo</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imagen7.jpg" alt="Spice Explosion de sandía" width="300" height="300">
+                    <div class="gallery-overlay">
+                        <h3>Sandía Volcánica</h3>
+                        <p>Frescura que hace erupción en tu boca</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="imagen8.jpg" alt="Spice Explosion de tamarindo" width="300" height="300">
+                    <div class="gallery-overlay">
+                        <h3>Tamarindo Dinamita</h3>
+                        <p>El clásico sabor mexicano con una explosión de picante</p>
+                    </div>
+                </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="#inicio" id="back-to-top">↑</a>
+
+    <footer id="contacto">
+        <p>&copy; 2024 Spice Explosion. Todos los derechos reservados.</p>
+        <div class="social-links">
+            <a href="#" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-instagram"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitter"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
